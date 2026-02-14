@@ -218,5 +218,11 @@ class BlS21ClimateEntity(ClimateEntity):
         if temperature is not None:
             await self._client.set_temperature(int(temperature))
 
+    async def async_reset_filter_change_timer(self) -> None:
+        await self._client.reset_filter_change_timer()
+
+    async def async_reset_alarm(self) -> None:
+        await self._client.reset_alarm()
+
     async def async_update(self) -> None:
         await self._client.poll()
