@@ -34,8 +34,20 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     except Exception as exception:
         raise CannotConnect from exception
 
-    # Return info that you want to store in the config entry.
-    return {"title": "Blauberg S21"}
+    device = client.device
+    title = (
+        device.name
+        if device and getattr(device, "name", None)
+        else f"Blauberg S21 ({host}:{port})"
+    )
+    unique_id = (
+        str(device.unique_id)
+        if device and getattr(device, "unique_id", None)
+        else f"{str(host).lower()}:{port}"
+    )
+
+    # Return info that will be used in the config entry.
+    return {"title": title, "unique_id": unique_id}
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -64,6 +76,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         except Exception:  # pylint: disable=broad-except
             errors["base"] = "unknown"
         else:
+            await self.async_set_unique_id(info["unique_id"])
+            self._abort_if_unique_id_configured()
+            self._async_abort_entries_match(
+                {CONF_HOST: user_input[CONF_HOST], CONF_PORT: user_input[CONF_PORT]}
+            )
             return self.async_create_entry(title=info["title"], data=user_input)
 
         return self.async_show_form(

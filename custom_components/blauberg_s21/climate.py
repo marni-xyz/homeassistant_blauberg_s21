@@ -1,5 +1,7 @@
 """Support for climate device."""
-from typing import Any, Optional
+from __future__ import annotations
+
+from typing import Any
 
 from homeassistant.components.climate import (
     ClimateEntity,
@@ -8,7 +10,6 @@ from homeassistant.components.climate import (
     HVACMode,
 )
 from homeassistant.components.climate.const import (
-    FAN_AUTO,
     FAN_HIGH,
     FAN_LOW,
     FAN_MEDIUM,
@@ -16,6 +17,7 @@ from homeassistant.components.climate.const import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from pybls21.client import S21Client
 from pybls21.models import HVACAction as BlS21HVACAction
@@ -52,7 +54,7 @@ async def async_setup_entry(
     """Set up a Blauberg S21 climate entity."""
     client: S21Client = hass.data[DOMAIN][config_entry.entry_id]
 
-    entities = [BlS21ClimateEntity(client)]
+    entities = [BlS21ClimateEntity(client, config_entry)]
     async_add_entities(entities, True)
 
 
@@ -61,8 +63,9 @@ class BlS21ClimateEntity(ClimateEntity):
 
     _attr_translation_key = "s21climate"
 
-    def __init__(self, client: S21Client) -> None:
+    def __init__(self, client: S21Client, config_entry: ConfigEntry) -> None:
         self._client = client
+        self._config_entry = config_entry
 
     @property
     def available(self) -> bool:
@@ -71,12 +74,14 @@ class BlS21ClimateEntity(ClimateEntity):
         return False
 
     @property
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         if self._client.device:
             return self._client.device.name
 
     @property
-    def unique_id(self) -> Optional[str]:
+    def unique_id(self) -> str | None:
+        if self._config_entry.unique_id:
+            return self._config_entry.unique_id
         if self._client.device:
             return self._client.device.unique_id
 
@@ -85,67 +90,73 @@ class BlS21ClimateEntity(ClimateEntity):
         return UnitOfTemperature.CELSIUS
 
     @property
-    def precision(self) -> Optional[float]:
+    def precision(self) -> float | None:
         if self._client.device:
             return self._client.device.precision
 
     @property
-    def current_temperature(self) -> Optional[float]:
+    def current_temperature(self) -> float | None:
         if self._client.device:
             return self._client.device.current_temperature
 
     @property
-    def target_temperature(self) -> Optional[float]:
+    def target_temperature(self) -> float | None:
         if self._client.device:
             return self._client.device.target_temperature
 
     @property
-    def target_temperature_step(self) -> Optional[float]:
+    def target_temperature_step(self) -> float | None:
         if self._client.device:
             return self._client.device.target_temperature_step
 
     @property
-    def max_temp(self) -> Optional[float]:
+    def max_temp(self) -> float | None:
         if self._client.device:
             return self._client.device.max_temp
 
     @property
-    def min_temp(self) -> Optional[float]:
+    def min_temp(self) -> float | None:
         if self._client.device:
             return self._client.device.min_temp
 
     @property
-    def current_humidity(self) -> Optional[float]:
+    def current_humidity(self) -> float | None:
         if self._client.device:
             return self._client.device.current_humidity
 
     @property
-    def hvac_mode(self) -> Optional[HVACMode]:
+    def hvac_mode(self) -> HVACMode | None:
         if self._client.device:
-            return S21_TO_HA_HVACMODE[self._client.device.hvac_mode]
+            return S21_TO_HA_HVACMODE.get(self._client.device.hvac_mode)
 
     @property
-    def hvac_action(self) -> Optional[str]:
+    def hvac_action(self) -> HVACAction | None:
         if self._client.device:
-            return S21_TO_HA_HVACACTION[self._client.device.hvac_action]
+            return S21_TO_HA_HVACACTION.get(self._client.device.hvac_action)
 
     @property
-    def hvac_modes(self) -> Optional[list[HVACMode]]:
+    def hvac_modes(self) -> list[HVACMode] | None:
         if self._client.device:
-            return [S21_TO_HA_HVACMODE[m] for m in self._client.device.hvac_modes]
+            return [
+                S21_TO_HA_HVACMODE[m]
+                for m in self._client.device.hvac_modes
+                if m in S21_TO_HA_HVACMODE
+            ]
 
     @property
-    def fan_mode(self) -> Optional[str]:
+    def fan_mode(self) -> str | None:
         if self._client.device:
             if self._client.device.max_fan_level == 3:
-                return S21_TO_HA_FAN_MODE[self._client.device.fan_mode]
+                return S21_TO_HA_FAN_MODE.get(
+                    self._client.device.fan_mode, str(self._client.device.fan_mode)
+                )
             return str(self._client.device.fan_mode)
 
     @property
-    def fan_modes(self) -> Optional[list[str]]:
+    def fan_modes(self) -> list[str] | None:
         if self._client.device:
             if self._client.device.max_fan_level == 3:
-                return [S21_TO_HA_FAN_MODE[m] for m in self._client.device.fan_modes]
+                return [S21_TO_HA_FAN_MODE.get(m, str(m)) for m in self._client.device.fan_modes]
             return [str(m) for m in self._client.device.fan_modes]
 
     @property
@@ -153,25 +164,33 @@ class BlS21ClimateEntity(ClimateEntity):
         return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE
 
     @property
-    def manufacturer(self) -> Optional[str]:
-        """Return the manufacturer of the device."""
+    def device_info(self) -> DeviceInfo | None:
+        """Return information used by Home Assistant to register the device."""
+        unique_id = self.unique_id
+        if not unique_id:
+            return None
+
+        name = self._config_entry.title
+        manufacturer = None
+        model = None
+        sw_version = None
+
         if self._client.device:
-            return self._client.device.manufacturer
+            name = self._client.device.name or name
+            manufacturer = self._client.device.manufacturer
+            model = self._client.device.model
+            sw_version = self._client.device.sw_version
+
+        return DeviceInfo(
+            identifiers={(DOMAIN, unique_id)},
+            name=name,
+            manufacturer=manufacturer,
+            model=model,
+            sw_version=sw_version,
+        )
 
     @property
-    def model(self) -> Optional[str]:
-        """Return the model of the device."""
-        if self._client.device:
-            return self._client.device.model
-
-    @property
-    def sw_version(self) -> Optional[str]:
-        """Return the software version of the device."""
-        if self._client.device:
-            return self._client.device.sw_version
-
-    @property
-    def icon(self) -> Optional[str]:
+    def icon(self) -> str | None:
         if self._client.device:
             if not self._client.device.available:
                 return "mdi:lan-disconnect"
@@ -197,9 +216,12 @@ class BlS21ClimateEntity(ClimateEntity):
         return "mdi:fan"
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
+        if hvac_mode not in HA_TO_S21_HVACMODE:
+            return
         await self._client.set_hvac_mode(HA_TO_S21_HVACMODE[hvac_mode])
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
+        previous_fan_mode = self.fan_mode
         int_fan_mode = (
             255
             if fan_mode == "custom"
@@ -212,6 +234,26 @@ class BlS21ClimateEntity(ClimateEntity):
             else int(fan_mode)
         )
         await self._client.set_fan_mode(int_fan_mode)
+        await self._client.poll()
+        self.async_write_ha_state()
+
+        current_fan_mode = self.fan_mode
+        if (
+            self.hass
+            and self.entity_id
+            and previous_fan_mode is not None
+            and current_fan_mode is not None
+            and previous_fan_mode != current_fan_mode
+        ):
+            self.hass.bus.async_fire(
+                "logbook_entry",
+                {
+                    "name": self.name or self._config_entry.title,
+                    "message": f"Fan mode changed: {previous_fan_mode} -> {current_fan_mode}",
+                    "entity_id": self.entity_id,
+                    "domain": DOMAIN,
+                },
+            )
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
         temperature = kwargs.get(ATTR_TEMPERATURE)

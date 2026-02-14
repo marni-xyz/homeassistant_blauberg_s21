@@ -25,7 +25,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await client.poll()
     except Exception as ex:
         raise ConfigEntryNotReady(
-            "Failed to connect to modbusTCP://%s:%d", host, port
+            f"Failed to connect to modbusTCP://{host}:{port}"
         ) from ex
 
     hass.data[DOMAIN][entry.entry_id] = client
