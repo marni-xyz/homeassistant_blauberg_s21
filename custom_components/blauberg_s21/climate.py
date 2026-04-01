@@ -161,8 +161,11 @@ class BlS21ClimateEntity(ClimateEntity):
 
     @property
     def supported_features(self) -> ClimateEntityFeature:
-        return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE
-
+        """ MaNi additions - additional attributes """
+        """ return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE """
+        return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE | ClimateEntityFeature.TURN_OFF | ClimateEntityFeature.TURN_ON
+        """ EO MaNi additions - additional attributes """
+    
     @property
     def device_info(self) -> DeviceInfo | None:
         """Return information used by Home Assistant to register the device."""
@@ -188,6 +191,38 @@ class BlS21ClimateEntity(ClimateEntity):
             model=model,
             sw_version=sw_version,
         )
+
+    """ MaNi additions - additional attributes """
+    @property
+    def current_intake_temperature(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.current_intake_temperature
+
+    @property
+    def current_temperature_fresh_air(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.current_temperature_fresh_air
+
+    @property
+    def current_temperature_consumed_air(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.current_temperature_consumed_air
+
+    @property
+    def filter_countdown(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.filter_countdown
+
+    @property
+    def pressure_air_incoming(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.pressure_air_incoming
+
+    @property
+    def pressure_air_outgoing(self) -> Optional[str]:
+        if self._client.device:
+            return self._client.device.pressure_air_outgoing
+    """ EO MaNi additions - additional attributes """
 
     @property
     def icon(self) -> str | None:
