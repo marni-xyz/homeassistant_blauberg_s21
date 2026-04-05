@@ -9,5 +9,5 @@
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/jvitkauskas/homeassistant_blauberg_s21/issues",
   "requirements": ["git+https://github.com/marni-xyz/pybls21ext.git@additions"],
-  "version": "0.4.0"
+  "version": "0.4.1"
 }
