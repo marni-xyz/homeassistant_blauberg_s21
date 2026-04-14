@@ -199,7 +199,7 @@ class BlS21ClimateEntity(ClimateEntity):
         if not self._client.device:
             return {}
         return {
-            "current_intake_temperature_in": self._client.device.current_intake_temperature_in,
+            "current_intake_temperature_in": self._client.device.current_intake_temperature,
             "current_intake_temperature_out": self._client.device.current_intake_temperature_out,
             "current_outlet_temperature_in": self._client.device.current_outlet_temperature_in,
             "current_outlet_temperature_out": self._client.device.current_outlet_temperature_out,
@@ -210,10 +210,7 @@ class BlS21ClimateEntity(ClimateEntity):
             "pressure_air_outgoing": self._client.device.pressure_air_outgoing,
             "is_boosting": self._client.device.is_boosting,
             "is_timer": self._client.device.is_timer,
-
-            # TODO: combine into 1 attribute - hrs:min:00
-            "timer_min": self._client.device.timer_min,
-            "timer_hrs": self._client.device.timer_hrs,
+            "timer_countdown": self._client.device.timer_countdown,
 
             # TODO: test different modes and their mapping
             # TODO: overwrite manual fan_mode whenever schedule mode is active
