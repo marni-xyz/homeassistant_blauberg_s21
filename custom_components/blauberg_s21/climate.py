@@ -213,9 +213,9 @@ class BlS21ClimateEntity(ClimateEntity):
             "timer_countdown": self._client.device.timer_countdown,
 
             # TODO: test different modes and their mapping
-            # TODO: overwrite manual fan_mode whenever schedule mode is active
             "is_schedule_mode": self._client.device.is_schedule_mode,
-            "current_schedule_mode_speed": self._client.device.current_schedule_mode_speed,
+            "fan_level_schedule_mode": self._client.device.fan_level_schedule_mode,
+            "fan_level_manual_mode": self._client.device.fan_level_manual_mode,
         }
     """ EO MaNi additions - additional attributes """
 
