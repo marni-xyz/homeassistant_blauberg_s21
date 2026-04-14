@@ -10,6 +10,9 @@ from homeassistant.components.climate import (
     HVACMode,
 )
 from homeassistant.components.climate.const import (
+    # MaNi additions - additional attributes
+    FAN_OFF,
+    # EO MaNi additions - additional attributes
     FAN_HIGH,
     FAN_LOW,
     FAN_MEDIUM,
@@ -43,7 +46,10 @@ S21_TO_HA_HVACACTION = {
     BlS21HVACAction.OFF: HVACAction.OFF,
 }
 
-S21_TO_HA_FAN_MODE = {1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
+""" MaNi additions - additional attributes """
+# S21_TO_HA_FAN_MODE = {1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
+S21_TO_HA_FAN_MODE = {0: FAN_OFF, 1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
+""" EO MaNi additions - additional attributes """
 
 
 async def async_setup_entry(
@@ -161,8 +167,11 @@ class BlS21ClimateEntity(ClimateEntity):
 
     @property
     def supported_features(self) -> ClimateEntityFeature:
-        return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE
-
+        """ MaNi additions - additional attributes """
+        """ return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE """
+        return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE | ClimateEntityFeature.TURN_OFF | ClimateEntityFeature.TURN_ON
+        """ EO MaNi additions - additional attributes """
+    
     @property
     def device_info(self) -> DeviceInfo | None:
         """Return information used by Home Assistant to register the device."""
@@ -188,6 +197,31 @@ class BlS21ClimateEntity(ClimateEntity):
             model=model,
             sw_version=sw_version,
         )
+
+    """ MaNi additions - additional attributes """
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        """Return additional state attributes."""
+        if not self._client.device:
+            return {}
+        return {
+            "current_intake_temperature_in": self._client.device.current_intake_temperature,
+            "current_intake_temperature_out": self._client.device.current_intake_temperature_out,
+            "current_outlet_temperature_in": self._client.device.current_outlet_temperature_in,
+            "current_outlet_temperature_out": self._client.device.current_outlet_temperature_out,
+            "alarm_state": self._client.device.alarm_state,
+            "filter_state": self._client.device.filter_state,
+            "filter_countdown": self._client.device.filter_countdown,
+            "pressure_air_incoming": self._client.device.pressure_air_incoming,
+            "pressure_air_outgoing": self._client.device.pressure_air_outgoing,
+            "is_boosting": self._client.device.is_boosting,
+            "is_timer": self._client.device.is_timer,
+            "timer_countdown": self._client.device.timer_countdown,
+            "is_schedule_mode": self._client.device.is_schedule_mode,
+            "fan_level_schedule_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_schedule_mode, str(self._client.device.fan_level_schedule_mode) ),
+            "fan_level_manual_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_manual_mode, str(self._client.device.fan_level_manual_mode) ),
+        }
+    """ EO MaNi additions - additional attributes """
 
     @property
     def icon(self) -> str | None:
