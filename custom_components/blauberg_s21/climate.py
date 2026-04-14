@@ -194,34 +194,32 @@ class BlS21ClimateEntity(ClimateEntity):
 
     """ MaNi additions - additional attributes """
     @property
-    def current_intake_temperature(self) -> Optional[str]:
-        if self._client.device:
-            return self._client.device.current_intake_temperature
+    def extra_state_attributes(self) -> dict[str, Any]:
+        """Return additional state attributes."""
+        if not self._client.device:
+            return {}
+        return {
+            "current_intake_temperature_in": self._client.device.current_intake_temperature_in,
+            "current_intake_temperature_out": self._client.device.current_intake_temperature_out,
+            "current_outlet_temperature_in": self._client.device.current_outlet_temperature_in,
+            "current_outlet_temperature_out": self._client.device.current_outlet_temperature_out,
+            "alarm_state": self._client.device.alarm_state,
+            "filter_state": self._client.device.filter_state,
+            "filter_countdown": self._client.device.filter_countdown,
+            "pressure_air_incoming": self._client.device.pressure_air_incoming,
+            "pressure_air_outgoing": self._client.device.pressure_air_outgoing,
+            "is_boosting": self._client.device.is_boosting,
+            "is_timer": self._client.device.is_timer,
 
-    @property
-    def current_temperature_fresh_air(self) -> Optional[str]:
-        if self._client.device:
-            return self._client.device.current_temperature_fresh_air
+            # TODO: combine into 1 attribute - hrs:min:00
+            "timer_min": self._client.device.timer_min,
+            "timer_hrs": self._client.device.timer_hrs,
 
-    @property
-    def current_temperature_consumed_air(self) -> Optional[str]:
-        if self._client.device:
-            return self._client.device.current_temperature_consumed_air
-
-    @property
-    def filter_countdown(self) -> Optional[str]:
-        if self._client.device:
-            return self._client.device.filter_countdown
-
-    @property
-    def pressure_air_incoming(self) -> Optional[str]:
-        if self._client.device:
-            return self._client.device.pressure_air_incoming
-
-    @property
-    def pressure_air_outgoing(self) -> Optional[str]:
-        if self._client.device:
-            return self._client.device.pressure_air_outgoing
+            # TODO: test different modes and their mapping
+            # TODO: overwrite manual fan_mode whenever schedule mode is active
+            "is_schedule_mode": self._client.device.is_schedule_mode,
+            "current_schedule_mode_speed": self._client.device.current_schedule_mode_speed,
+        }
     """ EO MaNi additions - additional attributes """
 
     @property
