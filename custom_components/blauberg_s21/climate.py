@@ -10,6 +10,9 @@ from homeassistant.components.climate import (
     HVACMode,
 )
 from homeassistant.components.climate.const import (
+    # MaNi additions - additional attributes
+    FAN_OFF,
+    # EO MaNi additions - additional attributes
     FAN_HIGH,
     FAN_LOW,
     FAN_MEDIUM,
@@ -43,7 +46,10 @@ S21_TO_HA_HVACACTION = {
     BlS21HVACAction.OFF: HVACAction.OFF,
 }
 
-S21_TO_HA_FAN_MODE = {1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
+""" MaNi additions - additional attributes """
+# S21_TO_HA_FAN_MODE = {1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
+S21_TO_HA_FAN_MODE = {0: FAN_OFF, 1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
+""" EO MaNi additions - additional attributes """
 
 
 async def async_setup_entry(
@@ -211,11 +217,9 @@ class BlS21ClimateEntity(ClimateEntity):
             "is_boosting": self._client.device.is_boosting,
             "is_timer": self._client.device.is_timer,
             "timer_countdown": self._client.device.timer_countdown,
-
-            # TODO: test different modes and their mapping
             "is_schedule_mode": self._client.device.is_schedule_mode,
-            "fan_level_schedule_mode": self._client.device.fan_level_schedule_mode,
-            "fan_level_manual_mode": self._client.device.fan_level_manual_mode,
+            "fan_level_schedule_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_schedule_mode, str(self._client.device.fan_level_schedule_mode) ),
+            "fan_level_manual_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_manual_mode, str(self._client.device.fan_level_manual_mode) ),
         }
     """ EO MaNi additions - additional attributes """
 
