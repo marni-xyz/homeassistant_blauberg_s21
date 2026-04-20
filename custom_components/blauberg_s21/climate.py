@@ -22,6 +22,9 @@ from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+# MaNi additions - register additional methods
+from homeassistant.helpers import entity_platform
+# EO MaNi additions - register additional methods
 from pybls21.client import S21Client
 from pybls21.models import HVACAction as BlS21HVACAction
 from pybls21.models import HVACMode as BlS21HVACMode
@@ -62,6 +65,20 @@ async def async_setup_entry(
 
     entities = [BlS21ClimateEntity(client, config_entry)]
     async_add_entities(entities, True)
+    
+    # MaNi additions - register additional methods
+    platform = entity_platform.async_get_current_platform()
+    platform.async_register_entity_service(
+        "reset_filter_change_timer",
+        {},
+        "async_reset_filter_change_timer",
+    )
+    platform.async_register_entity_service(
+        "reset_alarm",
+        {},
+        "async_reset_alarm",
+    )
+    # EO MaNi additions - register additional methods
 
 
 class BlS21ClimateEntity(ClimateEntity):
