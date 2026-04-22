@@ -30,7 +30,6 @@
         }
     }
   },
-  {
   "services": {
     "reset_filter_change_timer": {
       "name": "Reset timer for filter change",
