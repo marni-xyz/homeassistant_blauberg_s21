@@ -32,6 +32,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
+    # MaNi - Service Registration
+    async def handle_reset_filter(call: ServiceCall) -> None:
+        await client.reset_filter_change_timer()
+
+    async def handle_reset_alarm(call: ServiceCall) -> None:
+        await client.reset_alarm()
+
+    hass.services.async_register(DOMAIN, "reset_filter_change_timer", handle_reset_filter)
+    hass.services.async_register(DOMAIN, "reset_alarm", handle_reset_alarm)
+    # EO MaNi - Service Registration
+
     return True
 
 
