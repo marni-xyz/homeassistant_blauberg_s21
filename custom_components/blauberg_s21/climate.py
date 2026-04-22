@@ -49,10 +49,10 @@ S21_TO_HA_HVACACTION = {
     BlS21HVACAction.OFF: HVACAction.OFF,
 }
 
-""" MaNi additions - additional attributes """
-# S21_TO_HA_FAN_MODE = {1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
+# MaNi additions - additional attributes
+#S21_TO_HA_FAN_MODE = {1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
 S21_TO_HA_FAN_MODE = {0: FAN_OFF, 1: FAN_LOW, 2: FAN_MEDIUM, 3: FAN_HIGH, 255: "custom"}
-""" EO MaNi additions - additional attributes """
+# EO MaNi additions - additional attributes
 
 
 async def async_setup_entry(
@@ -184,10 +184,10 @@ class BlS21ClimateEntity(ClimateEntity):
 
     @property
     def supported_features(self) -> ClimateEntityFeature:
-        """ MaNi additions - additional attributes """
-        """ return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE """
+        # MaNi additions - additional attributes
+        #return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE
         return ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE | ClimateEntityFeature.TURN_OFF | ClimateEntityFeature.TURN_ON
-        """ EO MaNi additions - additional attributes """
+        # EO MaNi additions - additional attributes
     
     @property
     def device_info(self) -> DeviceInfo | None:
@@ -215,7 +215,7 @@ class BlS21ClimateEntity(ClimateEntity):
             sw_version=sw_version,
         )
 
-    """ MaNi additions - additional attributes """
+    # MaNi additions - additional attributes
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return additional state attributes."""
@@ -238,7 +238,7 @@ class BlS21ClimateEntity(ClimateEntity):
             "fan_level_schedule_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_schedule_mode, str(self._client.device.fan_level_schedule_mode) ),
             "fan_level_manual_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_manual_mode, str(self._client.device.fan_level_manual_mode) ),
         }
-    """ EO MaNi additions - additional attributes """
+    # EO MaNi additions - additional attributes
 
     @property
     def icon(self) -> str | None:
