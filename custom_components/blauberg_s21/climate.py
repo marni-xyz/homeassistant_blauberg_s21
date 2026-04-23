@@ -80,20 +80,6 @@ async def async_setup_entry(
     )
     # EO MaNi additions - register additional methods
 
-    # MaNi additions - register additional methods
-    platform = entity_platform.async_get_current_platform()
-    platform.async_register_entity_service(
-        "reset_filter_change_timer",
-        {},
-        "async_reset_filter_change_timer",
-    )
-    platform.async_register_entity_service(
-        "reset_alarm",
-        {},
-        "async_reset_alarm",
-    )
-    # EO MaNi additions - register additional methods
-
 
 class BlS21ClimateEntity(ClimateEntity):
     """Representation of a Blauberg S21 climate feature."""
