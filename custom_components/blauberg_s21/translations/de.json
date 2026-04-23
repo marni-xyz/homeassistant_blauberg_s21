@@ -28,6 +28,14 @@
                     }
                 }
             }
+        },
+        "button": {
+            "blauberg_s21_reset_filter": {
+                "name": "Filter Timer zurücksetzen"
+            },
+            "blauberg_s21_reset_alarm": {
+                "name": "Alarm-Status zurücksetzen"
+            }
         }
     }
 }
