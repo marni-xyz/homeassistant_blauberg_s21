@@ -28,6 +28,14 @@
                     }
                 }
             }
+        },
+        "button": {
+            "blauberg_s21_reset_filter": {
+                "name": "Reset filter timer"
+            },
+            "blauberg_s21_reset_alarm": {
+                "name": "Reset alarm state"
+            }
         }
     }
 }
