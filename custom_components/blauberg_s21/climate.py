@@ -25,10 +25,10 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 # MaNi additions - register additional methods
 from homeassistant.helpers import entity_platform
 # EO MaNi additions - register additional methods
+
 from pybls21.client import S21Client
 from pybls21.models import HVACAction as BlS21HVACAction
 from pybls21.models import HVACMode as BlS21HVACMode
-
 from .const import DOMAIN
 
 HA_TO_S21_HVACMODE = {
