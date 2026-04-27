@@ -38,6 +38,22 @@
     "reset_alarm": {
       "name": "Reset alarm",
       "description": "Resets the current alarm state."
+    },
+    "set_boost_on": {
+        "name": "Boost - turn on",
+        "description": "Activates the ventilation boost mode."
+    },
+    "set_boost_off": {
+        "name": "Boost - turn off",
+        "description": "Deactivates the ventilation boost mode."
+    },
+    "set_timer_on": {
+        "name": "Timer - turn on",
+        "description": "Activates the ventilation timer."
+    },
+    "set_timer_off": {
+        "name": "Timer - turn off",
+        "description": "Deactivates the ventilation timer."
     }
   }
 }
