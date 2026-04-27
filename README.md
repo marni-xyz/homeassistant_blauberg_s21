@@ -1,26 +1,30 @@
 # Home Assistant - Blauberg S21 (Extended) Custom Component
 
-# What This Is
+## Overview
 
-This is a custom component that allows you to control and monitor your Blauberg S21 HVAC system locally within Home Assistant.
+This custom component enables local control and monitoring of your Blauberg S21 HVAC system directly within Home Assistant.
 
-It is an extended version of [jvitkauskas' development](https://github.com/jvitkauskas/homeassistant_blauberg_s21)). Without their efforts, this would not have been possible.
+It is an extended version of **[jvitkauskas' original development](https://github.com/jvitkauskas/homeassistant_blauberg_s21)**. Many thanks for laying the foundation!
 
 The major differences include:
-- More attributes (all temperatures, scheduler status)
-- Additional functions to change settings (timer, boost mode)
+- Expanded attributes: All temperatures, scheduler status
+- New control functions: Timer mode, boost mode, alarm reset
 
-# Installation and Configuration
 
-Please note: This extended repo is not yet included in HACS. Hence, manual installation is required.
+## Installation and Configuration
 
-## Manual install
-Copy `blauberg_s21_ext` folder from this repository to `custom_components` of your Home Assistant instalation. Restart your HA instance.
+**Please note:** This extended repo is not yet included in HACS. Hence, manual installation is required.
 
-To configure this integration, go to Home Assistant web interface Configuration -> Integrations and then press "+" button and select "Blauberg S21 (Extended)".
+### Manual install
+1. Copy the `blauberg_s21_ext` folder from this repository to `custom_components` directory of your Home Assistant installation.
+2. Restart your HA instance.
 
-When you are done with configuration you should see your device in Settings -> Devices & Services
+### Setup
+1. Navigate to Configuration → Integrations in the Home Assistant web interface.
+2. Click the + button and select "Blauberg S21 (Extended)".
+3. After configuration, your device will appear in Settings → Devices & Services.
 
-# Development
 
-See [underlying pybls21 library](https://github.com/marni-xyz/pybls21)
+## Development
+
+This component is built on top of the [underlying pybls21 library](https://github.com/marni-xyz/pybls21)
