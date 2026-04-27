@@ -36,6 +36,14 @@
             "blauberg_s21_reset_alarm": {
                 "name": "Alarm-Status zurücksetzen"
             }
+        },
+        "switch": {
+            "blauberg_s21_boost_switch": {
+                "name": "Boost Modus-Schalter"
+            },
+            "blauberg_s21_timer_switch": {
+                "name": "Timer Modus-Schalter"
+            }
         }
     }
 }
