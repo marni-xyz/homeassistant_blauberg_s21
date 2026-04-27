@@ -36,6 +36,14 @@
             "blauberg_s21_reset_alarm": {
                 "name": "Reset alarm state"
             }
+        },
+        "switch": {
+            "blauberg_s21_boost_switch": {
+                "name": "Boost Mode-Switch"
+            },
+            "blauberg_s21_timer_switch": {
+                "name": "Timer Mode-Switch"
+            }
         }
     }
 }
