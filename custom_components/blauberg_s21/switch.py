@@ -32,8 +32,10 @@ class BlaubergS21BoostSwitch(SwitchEntity):
         self._attr_unique_id = f"blauberg_s21_{config_entry.unique_id}_boost_switch"
 
     @property
-    def is_on(self) -> bool:
-        return self._client.device.is_boosting
+    def is_on(self) -> bool | None:
+        if self._client.device:
+            return self._client.device.is_boosting
+        return None
 
     async def async_turn_on(self, **kwargs) -> None:
         await self._client.set_boost_on()
@@ -58,8 +60,10 @@ class BlaubergS21TimerSwitch(SwitchEntity):
         self._attr_unique_id = f"blauberg_s21_{config_entry.unique_id}_timer_switch"
 
     @property
-    def is_on(self) -> bool:
-        return self._client.device.is_timer
+    def is_on(self) -> bool | None:
+        if self._client.device:
+            return self._client.device.is_timer
+        return None
 
     async def async_turn_on(self, **kwargs) -> None:
         await self._client.set_timer_on()
