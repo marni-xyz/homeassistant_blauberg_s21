@@ -28,6 +28,14 @@
                 }
             }
         }
+    },
+    "button": {
+      "blauberg_s21_reset_filter": { "name": "Reset filter timer" },
+      "blauberg_s21_reset_alarm":  { "name": "Reset alarm" }
+    },
+    "switch": {
+      "blauberg_s21_boost_switch": { "name": "Boost Mode-Switch" },
+      "blauberg_s21_timer_switch": { "name": "Timer Mode-Switch" }
     }
   },
   "services": {
@@ -38,22 +46,6 @@
     "reset_alarm": {
       "name": "Reset alarm",
       "description": "Resets the current alarm state."
-    },
-    "set_boost_on": {
-        "name": "Boost - turn on",
-        "description": "Activates the ventilation boost mode."
-    },
-    "set_boost_off": {
-        "name": "Boost - turn off",
-        "description": "Deactivates the ventilation boost mode."
-    },
-    "set_timer_on": {
-        "name": "Timer - turn on",
-        "description": "Activates the ventilation timer."
-    },
-    "set_timer_off": {
-        "name": "Timer - turn off",
-        "description": "Deactivates the ventilation timer."
     }
   }
 }
