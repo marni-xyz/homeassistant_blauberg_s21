@@ -9,9 +9,9 @@ from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
+
 from pybls21.client import S21Client
 from pybls21.exceptions import UnsupportedDeviceException
-
 from .const import DOMAIN
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
