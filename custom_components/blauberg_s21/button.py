@@ -24,11 +24,12 @@ async def async_setup_entry(
 class BlaubergS21ResetFilterButton(ButtonEntity):
     _attr_icon = "mdi:filter-remove"
     _attr_translation_key = "blauberg_s21_reset_filter"
+    _attr_name = "Reset Filter"
 
     def __init__(self, client: S21Client, config_entry: ConfigEntry) -> None:
         self._client = client
         self._config_entry = config_entry
-        self._attr_unique_id = f"blauberg_s21_{config_entry.unique_id}_reset_filter"
+        self._attr_unique_id = f"{config_entry.unique_id}_reset_filter_button"
 
     async def async_press(self) -> None:
         await self._client.reset_filter_change_timer()
@@ -43,11 +44,12 @@ class BlaubergS21ResetFilterButton(ButtonEntity):
 class BlaubergS21ResetAlarmButton(ButtonEntity):
     _attr_icon = "mdi:alarm-off"
     _attr_translation_key = "blauberg_s21_reset_alarm"
+    _attr_name = "Reset Alarm"
 
     def __init__(self, client: S21Client, config_entry: ConfigEntry) -> None:
         self._client = client
         self._config_entry = config_entry
-        self._attr_unique_id = f"blauberg_s21_{config_entry.unique_id}_reset_alarm"
+        self._attr_unique_id = f"{config_entry.unique_id}_reset_alarm_button"
 
     async def async_press(self) -> None:
         await self._client.reset_alarm()
