@@ -25,11 +25,12 @@ async def async_setup_entry(
 class BlaubergS21BoostSwitch(SwitchEntity):
     _attr_icon = "mdi:fan-plus"
     _attr_translation_key = "blauberg_s21_boost_switch"
+    _attr_name = "Boost Mode"
 
     def __init__(self, client: S21Client, config_entry: ConfigEntry) -> None:
         self._client = client
         self._config_entry = config_entry
-        self._attr_unique_id = f"blauberg_s21_{config_entry.unique_id}_boost_switch"
+        self._attr_unique_id = f"{config_entry.unique_id}_boost_switch"
 
     @property
     def is_on(self) -> bool | None:
@@ -53,11 +54,12 @@ class BlaubergS21BoostSwitch(SwitchEntity):
 class BlaubergS21TimerSwitch(SwitchEntity):
     _attr_icon = "mdi:timer"
     _attr_translation_key = "blauberg_s21_timer_switch"
+    _attr_name = "Timer Mode"
 
     def __init__(self, client: S21Client, config_entry: ConfigEntry) -> None:
         self._client = client
         self._config_entry = config_entry
-        self._attr_unique_id = f"blauberg_s21_{config_entry.unique_id}_timer_switch"
+        self._attr_unique_id = f"{config_entry.unique_id}_timer_switch"
 
     @property
     def is_on(self) -> bool | None:
