@@ -40,9 +40,15 @@ class BlaubergS21BoostSwitch(SwitchEntity):
 
     async def async_turn_on(self, **kwargs) -> None:
         await self._client.set_boost_on()
+        if self._client.device:
+            self._client.device.is_boosting = True
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         await self._client.set_boost_off()
+        if self._client.device:
+            self._client.device.is_boosting = False
+        self.async_write_ha_state()
 
     @property
     def device_info(self) -> DeviceInfo:
@@ -69,9 +75,15 @@ class BlaubergS21TimerSwitch(SwitchEntity):
 
     async def async_turn_on(self, **kwargs) -> None:
         await self._client.set_timer_on()
+        if self._client.device:
+            self._client.device.is_timer = True
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         await self._client.set_timer_off()
+        if self._client.device:
+            self._client.device.is_timer = False
+        self.async_write_ha_state()
 
     @property
     def device_info(self) -> DeviceInfo:
