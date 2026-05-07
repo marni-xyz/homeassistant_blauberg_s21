@@ -40,14 +40,16 @@ class BlaubergS21BoostSwitch(SwitchEntity):
 
     async def async_turn_on(self, **kwargs) -> None:
         await self._client.set_boost_on()
-        if self._client.device:
-            self._client.device.is_boosting = True
+        self._optimistic = True
+        self._client.device.is_boosting = True
+        await self._client.poll()
         self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         await self._client.set_boost_off()
-        if self._client.device:
-            self._client.device.is_boosting = False
+        self._optimistic = True
+        self._client.device.is_boosting = False
+        await self._client.poll()
         self.async_write_ha_state()
 
     @property
@@ -75,14 +77,16 @@ class BlaubergS21TimerSwitch(SwitchEntity):
 
     async def async_turn_on(self, **kwargs) -> None:
         await self._client.set_timer_on()
-        if self._client.device:
-            self._client.device.is_timer = True
+        self._optimistic = True
+        self._client.device.is_timer = True
+        await self._client.poll()
         self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         await self._client.set_timer_off()
-        if self._client.device:
-            self._client.device.is_timer = False
+        self._optimistic = True
+        self._client.device.is_timer = False
+        await self._client.poll()
         self.async_write_ha_state()
 
     @property
