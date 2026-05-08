@@ -1,18 +1,30 @@
-# HomeAssistant - Blauberg S21 Custom Component
+# Home Assistant - Blauberg S21 (Extended) Custom Component
 
-# What This Is
+## Overview
 
-This is a custom component to allows you to control and monitor your Blauberg S21 HVAC system locally.
+This custom component enables local control and monitoring of your Blauberg S21 HVAC system directly within Home Assistant.
 
-# Installation and Configuration
+It is an extended version of **[jvitkauskas' original development](https://github.com/jvitkauskas/homeassistant_blauberg_s21)**. Many thanks for laying the foundation!
 
-## Manual install
-Copy `custom_components` folder from this repository to `/config` of your Home Assistant instalation.
+The major differences include:
+- Expanded attributes: All temperatures, scheduler status
+- New control functions: Timer mode, boost mode, alarm reset
 
-To configure this integration, go to Home Assistant web interface Configuration -> Integrations and then press "+" button and select "Blauberg S21".
 
-When you are done with configuration you should see your device in Settings -> Devices & Services
+## Installation and Configuration
 
-# Development
+**Please note:** This extended repo is not yet included in HACS. Hence, manual installation is required.
 
-See [underlying pybls21 library](https://github.com/jvitkauskas/pybls21)
+### Manual install
+1. Copy the `blauberg_s21_ext` folder from this repository to `custom_components` directory of your Home Assistant installation.
+2. Restart your HA instance.
+
+### Setup
+1. Navigate to Configuration → Integrations in the Home Assistant web interface.
+2. Click the + button and select "Blauberg S21 (Extended)".
+3. After configuration, your device will appear in Settings → Devices & Services.
+
+
+## Development
+
+This component is built on top of the [underlying pybls21 library](https://github.com/marni-xyz/pybls21)

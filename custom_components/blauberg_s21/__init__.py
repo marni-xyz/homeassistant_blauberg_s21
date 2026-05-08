@@ -5,11 +5,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST, CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
-from pybls21.client import S21Client
 
+from pybls21.client import S21Client
 from .const import DOMAIN
 
-PLATFORMS: list[Platform] = [Platform.CLIMATE]
+# MaNi additions - additional functions via buttons and switches
+#PLATFORMS: list[Platform] = [Platform.CLIMATE]
+PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.BUTTON, Platform.SWITCH]
+# EO MaNi additions - additional functions via buttons and switches
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -31,17 +34,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN][entry.entry_id] = client
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-
-    # MaNi - Service Registration
-    async def handle_reset_filter(call: ServiceCall) -> None:
-        await client.reset_filter_change_timer()
-
-    async def handle_reset_alarm(call: ServiceCall) -> None:
-        await client.reset_alarm()
-
-    hass.services.async_register(DOMAIN, "reset_filter_change_timer", handle_reset_filter)
-    hass.services.async_register(DOMAIN, "reset_alarm", handle_reset_alarm)
-    # EO MaNi - Service Registration
 
     return True
 
