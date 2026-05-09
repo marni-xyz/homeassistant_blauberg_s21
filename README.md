@@ -1,4 +1,4 @@
-# Home Assistant - Blauberg S21 (Extended) Custom Component
+# Home Assistant - Blauberg S21 (Extended) - Custom Component
 
 [![GitHub Release][releases-shield]][releases]
 [![License][license-shield]](LICENSE)
