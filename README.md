@@ -20,18 +20,23 @@ The major differences include:
 
 ## Installation and Configuration
 
+As this integration is not part of Home Assistant Core, you have to download it first into your Home Assistant installation. 
+
+### Download via HACS
+Click the following button to open the download page for this integration in HACS:
+
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=marni-xyz&repository=homeassistant_blauberg_s21&category=integration)
 
-### Manual install
-1. Copy the `blauberg_s21_ext` folder from this repository to `custom_components` directory of your Home Assistant installation.
+### Alternative manual installation
+1. Copy the `blauberg_s21_ext` folder (with all files) from this repository to the `custom_components` directory of your Home Assistant installation.
 2. Restart your HA instance.
 
 ### Setup
-Configuration is done in the UI
+Configuration is done in the HA UI
 
-1. Navigate to Configuration → Integrations in the Home Assistant web interface.
-2. Click the + button and select "Blauberg S21 (Extended)".
-3. After configuration, your device, buttons, switches will appear in Settings → Devices & Services.
+1. Navigate to "Configuration" → "Integrations" in the Home Assistant web interface.
+2. Click the + button (at the bottom right) and search for "Blauberg S21 (Extended)".
+3. After configuration, your device with a climate entity, some buttons and switches will appear in "Configuration" → "Integrations".
 
 
 ## Report issues
