@@ -67,7 +67,7 @@ This component is built on top of the [underlying pybls21 library](https://githu
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/marni-xyz/homeassistant_blauberg_s21.svg?style=for-the-badge
-[mmaintenance-shield]: https://img.shields.io/badge/maintainer-%40marni-xyz.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-%40marni-xyz.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/v/release/marni-xyz/homeassistant_blauberg_s21.svg?style=for-the-badge
 [releases]: https://github.com/marni-xyz/homeassistant_blauberg_s21/releases
 [user_profile]: https://github.com/marni-xyz
