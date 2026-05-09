@@ -1,1 +1,1 @@
-"""Tests for the Bmauberg S21 integration."""
+"""Tests for the Blauberg S21 integration."""
