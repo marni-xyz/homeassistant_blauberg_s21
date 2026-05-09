@@ -58,7 +58,7 @@ This component is built on top of the [underlying pybls21 library](https://githu
 
 ---
 
-[buymecoffee]: https://www.buymeacoffee.com/marni-xyz
+[buymecoffee]: https://www.buymeacoffee.com/marnixyz
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/marni-xyz/homeassistant_blauberg_s21.svg?style=for-the-badge
 [commits]: https://github.com/marni-xyz/homeassistant_blauberg_s21/commits/main
