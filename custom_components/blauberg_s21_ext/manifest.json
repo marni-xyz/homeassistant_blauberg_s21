@@ -1,7 +1,7 @@
 {
   "domain": "blauberg_s21_ext",
   "name": "Blauberg S21 Extended",
-  "codeowners": ["@jvitkauskas", "@marni-xyz"],
+  "codeowners": ["@marni-xyz"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/marni-xyz/homeassistant_blauberg_s21",
