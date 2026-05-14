@@ -41,7 +41,7 @@ Configuration is done in the HA UI
 
 ## Report issues
 
-If you have any issues with this integration, please [open an issue](https://github.com/marni-xyz/homeassistant_blauberg_s21).
+If you have any issues with this integration, please [open an issue](../../issues).
 
 Make sure to include debug logs. See https://www.home-assistant.io/integrations/logger/ for more information on how to enable debug logs.
 
