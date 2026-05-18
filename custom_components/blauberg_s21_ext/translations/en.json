@@ -44,7 +44,7 @@
             "blauberg_s21_timer_switch": {
                 "name": "Timer Mode-Switch"
             },
-            "blauberg_s21_scheduler_mode_switch": {
+            "blauberg_s21_schedule_mode_switch": {
                 "name": "Schedule Mode-Switch"
             }
         }
