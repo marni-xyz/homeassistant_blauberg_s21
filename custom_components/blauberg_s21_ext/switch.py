@@ -19,6 +19,7 @@ async def async_setup_entry(
     async_add_entities([
         BlaubergS21BoostSwitch(client, config_entry),
         BlaubergS21TimerSwitch(client, config_entry),
+        BlaubergS21ScheduleModeSwitch(client, config_entry),
     ])
 
 
@@ -96,15 +97,15 @@ class BlaubergS21TimerSwitch(SwitchEntity):
         )
 
 
-class BlaubergS21SchedulerModeSwitch(SwitchEntity):
+class BlaubergS21ScheduleModeSwitch(SwitchEntity):
     _attr_icon = "mdi:calendar-clock"
-    _attr_translation_key = "blauberg_s21_scheduler_mode_switch"
-    _attr_name = "Scheduler Mode"
+    _attr_translation_key = "blauberg_s21_schedule_mode_switch"
+    _attr_name = "Schedule Mode"
 
     def __init__(self, client: S21Client, config_entry: ConfigEntry) -> None:
         self._client = client
         self._config_entry = config_entry
-        self._attr_unique_id = f"{config_entry.unique_id}_scheduler_mode_switch"
+        self._attr_unique_id = f"{config_entry.unique_id}_schedule_mode_switch"
 
     @property
     def is_on(self) -> bool | None:
