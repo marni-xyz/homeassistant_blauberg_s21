@@ -35,7 +35,8 @@
     },
     "switch": {
       "blauberg_s21_boost_switch": { "name": "Boost Mode-Switch" },
-      "blauberg_s21_timer_switch": { "name": "Timer Mode-Switch" }
+      "blauberg_s21_timer_switch": { "name": "Timer Mode-Switch" },
+      "blauberg_s21_scheduler_mode_switch": { "name": "Schedule Mode-Switch" }
     }
   },
   "services": {
