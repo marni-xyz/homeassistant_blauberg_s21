@@ -43,6 +43,9 @@
             },
             "blauberg_s21_timer_switch": {
                 "name": "Timer Modus-Schalter"
+            },
+            "blauberg_s21_scheduler_mode_switch": {
+                "name": "Schedule Modus-Schalter"
             }
         }
     }

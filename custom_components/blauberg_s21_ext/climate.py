@@ -284,7 +284,7 @@ class BlS21ClimateEntity(ClimateEntity):
             if fan_mode == FAN_HIGH
             else int(fan_mode)
         )
-        await self._client.set_fan_mode(int_fan_mode)
+        await self._client.set_fan_mode(int_fan_mode, 3)
         await self._client.poll()
         self.async_write_ha_state()
 

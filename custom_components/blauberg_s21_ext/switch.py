@@ -94,3 +94,40 @@ class BlaubergS21TimerSwitch(SwitchEntity):
         return DeviceInfo(
             identifiers={(DOMAIN, self._config_entry.unique_id)},
         )
+
+
+class BlaubergS21SchedulerModeSwitch(SwitchEntity):
+    _attr_icon = "mdi:calendar-clock"
+    _attr_translation_key = "blauberg_s21_scheduler_mode_switch"
+    _attr_name = "Scheduler Mode"
+
+    def __init__(self, client: S21Client, config_entry: ConfigEntry) -> None:
+        self._client = client
+        self._config_entry = config_entry
+        self._attr_unique_id = f"{config_entry.unique_id}_scheduler_mode_switch"
+
+    @property
+    def is_on(self) -> bool | None:
+        if self._client.device:
+            return self._client.device.is_schedule_mode
+        return None
+
+    async def async_turn_on(self, **kwargs) -> None:
+        await self._client.set_scheduler_mode_on()
+        self._optimistic = True
+        self._client.device.is_schedule_mode = True
+        await self._client.poll()
+        self.async_write_ha_state()
+
+    async def async_turn_off(self, **kwargs) -> None:
+        await self._client.set_scheduler_mode_off()
+        self._optimistic = True
+        self._client.device.is_schedule_mode = False
+        await self._client.poll()
+        self.async_write_ha_state()
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        return DeviceInfo(
+            identifiers={(DOMAIN, self._config_entry.unique_id)},
+        )
