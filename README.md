@@ -14,8 +14,8 @@ This custom component enables local control and monitoring of your Blauberg S21 
 It is an extended version of **[jvitkauskas' original development](https://github.com/jvitkauskas/homeassistant_blauberg_s21)**. Many thanks for laying the foundation!
 
 The major differences include:
-- Expanded attributes: All temperatures, scheduler status
-- New control functions: Timer mode, boost mode, alarm reset
+- Expanded attributes: All temperatures, scheduler status, alarm code
+- New control functions: Timer mode, boost mode, alarm reset, bypass/rotor mode
 
 
 ## Installation and Configuration

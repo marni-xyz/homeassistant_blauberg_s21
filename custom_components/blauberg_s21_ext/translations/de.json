@@ -47,6 +47,16 @@
             "blauberg_s21_schedule_mode_switch": {
                 "name": "Schedule Modus-Schalter"
             }
+        },
+        "select": {
+            "blauberg_s21_bypass_mode": {
+                "name": "Bypass Modus-Auswahl",
+                "state": {
+                    "close": "Bypass geschlossen / Rotor gestartet",
+                    "open":  "Bypass offen / Rotor gestoppt",
+                    "auto":  "Automatik Modus"
+                }
+            }
         }
     }
 }
