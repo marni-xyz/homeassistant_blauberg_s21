@@ -19,15 +19,15 @@
   },
   "entity": {
     "climate": {
-        "s21climate": {
-            "state_attributes": {
-                "fan_mode": {
-                    "state": {
-                        "custom": "Custom"
-                    }
-                }
+      "s21climate": {
+        "state_attributes": {
+          "fan_mode": {
+            "state": {
+              "custom": "Custom"
             }
+          }
         }
+      }
     },
     "button": {
       "blauberg_s21_reset_filter": { "name": "Reset filter timer" },
@@ -37,6 +37,16 @@
       "blauberg_s21_boost_switch": { "name": "Boost Mode-Switch" },
       "blauberg_s21_timer_switch": { "name": "Timer Mode-Switch" },
       "blauberg_s21_schedule_mode_switch": { "name": "Schedule Mode-Switch" }
+    },
+    "select": {
+      "blauberg_s21_bypass_mode": {
+        "name": "Bypass mode",
+        "state": {
+          "close": "Close bypass / Start rotor",
+          "open": "Open bypass / Stop rotor",
+          "auto": "Automatic"
+        }
+      }
     }
   },
   "services": {

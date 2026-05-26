@@ -227,6 +227,9 @@ class BlS21ClimateEntity(ClimateEntity):
             "current_outlet_temperature_in": self._client.device.current_outlet_temperature_in,
             "current_outlet_temperature_out": self._client.device.current_outlet_temperature_out,
             "alarm_state": self._client.device.alarm_state,
+            "alarm_codes": self._client.device.alarm_codes,
+            "bypass_type": self._client.device.bypass_type,
+            "bypass_mode": self._client.device.bypass_mode,
             "filter_state": self._client.device.filter_state,
             "filter_countdown": self._client.device.filter_countdown,
             "pressure_air_incoming": self._client.device.pressure_air_incoming,
@@ -265,6 +268,11 @@ class BlS21ClimateEntity(ClimateEntity):
             if self._client.device.hvac_action == BlS21HVACAction.FAN:
                 return "mdi:fan"
         return "mdi:fan"
+
+    async def async_set_bypass_mode(self, mode: int) -> None:
+        await self._client.set_bypass_mode(mode)
+        await self._client.poll()
+        self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         if hvac_mode not in HA_TO_S21_HVACMODE:

@@ -9,10 +9,14 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from pybls21.client import S21Client
 from .const import DOMAIN
 
-# MaNi additions - additional functions via buttons and switches
-#PLATFORMS: list[Platform] = [Platform.CLIMATE]
-PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.BUTTON, Platform.SWITCH]
-# EO MaNi additions - additional functions via buttons and switches
+# MaNi additions - additional functions via buttons, switches and select
+PLATFORMS: list[Platform] = [
+    Platform.CLIMATE,
+    Platform.BUTTON,
+    Platform.SWITCH,
+    Platform.SELECT,
+]
+# EO MaNi additions - additional functions via buttons, switches and select
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
