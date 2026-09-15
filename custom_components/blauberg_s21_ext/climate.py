@@ -222,24 +222,38 @@ class BlS21ClimateEntity(ClimateEntity):
         if not self._client.device:
             return {}
         return {
-            "current_intake_temperature_in": self._client.device.current_intake_temperature,
-            "current_intake_temperature_out": self._client.device.current_intake_temperature_out,
-            "current_outlet_temperature_in": self._client.device.current_outlet_temperature_in,
-            "current_outlet_temperature_out": self._client.device.current_outlet_temperature_out,
+            "current_intake_temperature": self._client.device.current_intake_temperature,
+            "current_supply_temperature": self._client.device.current_supply_temperature,
+            "current_extract_temperature": self._client.device.current_extract_temperature,
+            "current_exhaust_temperature": self._client.device.current_exhaust_temperature,
             "alarm_state": self._client.device.alarm_state,
             "alarm_codes": self._client.device.alarm_codes,
             "bypass_type": self._client.device.bypass_type,
             "bypass_mode": self._client.device.bypass_mode,
+            "bypass_position": self._client.device.bypass_position,
+            "bypass_position_manual": self._client.device.bypass_position_manual,
             "filter_state": self._client.device.filter_state,
-            "filter_countdown": self._client.device.filter_countdown,
-            "pressure_air_incoming": self._client.device.pressure_air_incoming,
-            "pressure_air_outgoing": self._client.device.pressure_air_outgoing,
+            "filter_countdown_days": self._client.device.filter_countdown_days,
+            "filter_countdown_hrs": self._client.device.filter_countdown_hrs,
+            "filter_countdown_min": self._client.device.filter_countdown_min,
             "is_boosting": self._client.device.is_boosting,
             "is_timer": self._client.device.is_timer,
             "timer_countdown": self._client.device.timer_countdown,
             "is_schedule_mode": self._client.device.is_schedule_mode,
             "fan_level_schedule_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_schedule_mode, str(self._client.device.fan_level_schedule_mode) ),
             "fan_level_manual_mode": S21_TO_HA_FAN_MODE.get(self._client.device.fan_level_manual_mode, str(self._client.device.fan_level_manual_mode) ),
+            "supply_fan_rpm": self._client.device.supply_fan_rpm,
+            "extract_fan_rpm": self._client.device.extract_fan_rpm,
+            "supply_pressure": self._client.device.supply_pressure,
+            "extract_pressure": self._client.device.extract_pressure,
+        
+            # birdie1 additions
+            "engine_running_time": self._client.device.engine_running_time,
+            "supply_airflow": self._client.device.supply_airflow,
+            "extract_airflow": self._client.device.extract_airflow,
+            "supply_fan_speed": self._client.device.supply_fan_speed,
+            "extract_fan_speed": self._client.device.extract_fan_speed,
+            # EO birdie1 additions
         }
     # EO MaNi additions - additional attributes
 
