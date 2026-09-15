@@ -9,7 +9,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from pybls21.client import S21Client
 from .const import DOMAIN
 
-BYPASS_MODE_OPTIONS = ["close", "open", "auto"]
+BYPASS_MODE_OPTIONS = ["CLOSED", "OPEN", "AUTO"]
 
 async def async_setup_entry(
     hass: HomeAssistant,
