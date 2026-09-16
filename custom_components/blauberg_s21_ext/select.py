@@ -8,6 +8,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from pybls21.client import S21Client
 from .const import DOMAIN
+from .models import S21Entity
 
 BYPASS_MODE_OPTIONS = ["CLOSED", "OPEN", "AUTO"]
 
@@ -22,7 +23,7 @@ async def async_setup_entry(
     ])
 
 
-class BlaubergS21BypassModeSelect(SelectEntity):
+class BlaubergS21BypassModeSelect(SelectEntity, S21Entity):
     _attr_icon = "mdi:swap-horizontal"
     _attr_translation_key = "blauberg_s21_bypass_mode"
     _attr_name = "Bypass Mode"

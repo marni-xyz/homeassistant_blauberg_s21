@@ -49,10 +49,20 @@ to make sure the code follows the style.
 
 ## Test your code modification
 
-You should verify that existing [tests](./tests) are still working
-and you are encouraged to add new ones.
+You should verify that existing [tests](./tests) are still working and you are encouraged to add new ones.
 You can run the tests using the following commands from the root folder:
 
+Run all tests:
+```bash
+python -m unittest -v
+```
+
+Run one test module (e.g. timer):
+```bash
+python -m unittest -v tests.test_client.TestClient.test_set_timer_off
+```
+
+UNDER DEVELOPMENT - Run Home Assistant specific tests
 ```bash
 # Create a virtual environment
 python3 -m venv venv

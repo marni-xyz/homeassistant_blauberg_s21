@@ -5,9 +5,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from pybls21.client import S21Client
+from . import S21Client
 from .const import DOMAIN
-
+from .models import S21Entity
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -21,7 +21,7 @@ async def async_setup_entry(
     ])
 
 
-class BlaubergS21ResetFilterButton(ButtonEntity):
+class BlaubergS21ResetFilterButton(ButtonEntity, S21Entity):
     _attr_icon = "mdi:filter-remove"
     _attr_translation_key = "blauberg_s21_reset_filter"
     _attr_name = "Reset Filter"
@@ -41,7 +41,7 @@ class BlaubergS21ResetFilterButton(ButtonEntity):
         )
 
 
-class BlaubergS21ResetAlarmButton(ButtonEntity):
+class BlaubergS21ResetAlarmButton(ButtonEntity, S21Entity):
     _attr_icon = "mdi:alarm-off"
     _attr_translation_key = "blauberg_s21_reset_alarm"
     _attr_name = "Reset Alarm"

@@ -1,17 +1,20 @@
 """Config flow for Blauberg S21 integration."""
+# MaNi + birdie1 additions
+# birdie1 PR #15 - Handle changing config parameter
+
 from __future__ import annotations
 
 from typing import Any
 
 import voluptuous as vol
 from homeassistant import config_entries
+from homeassistant.config_entries import OptionsFlow, ConfigEntry
 from homeassistant.const import CONF_HOST, CONF_PORT
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
-from pybls21.client import S21Client
-from pybls21.exceptions import UnsupportedDeviceException
+from .client import S21Client
 from .const import DOMAIN
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
@@ -28,21 +31,23 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         host = data[CONF_HOST]
         port = data[CONF_PORT]
         client = S21Client(host, port)
-        await client.poll()
-    except UnsupportedDeviceException:
-        raise
+        data = await client.poll()
     except Exception as exception:
-        raise CannotConnect from exception
+        raise HomeAssistantError from exception
 
-    device = client.device
+    ###device = client.device
     title = (
-        device.name
-        if device and getattr(device, "name", None)
+        ###device.name
+        ###if device and getattr(device, "name", None)
+        data.get('name')
+        if data and getattr(data, "name", None)
         else f"Blauberg S21 ({host}:{port})"
     )
     unique_id = (
-        str(device.unique_id)
-        if device and getattr(device, "unique_id", None)
+        ###str(device.unique_id)
+        ###if device and getattr(device, "unique_id", None)
+        str(data.get('unique_id'))
+        if data and getattr(data, "unique_id", None)
         else f"{str(host).lower()}:{port}"
     )
 
@@ -69,10 +74,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         try:
             info = await validate_input(self.hass, user_input)
-        except CannotConnect:
+        except HomeAssistantError:
             errors["base"] = "cannot_connect"
-        except UnsupportedDeviceException:
-            errors["base"] = "unsupported_device"
         except Exception:  # pylint: disable=broad-except
             errors["base"] = "unknown"
         else:
@@ -87,6 +90,42 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
 
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
+        return S21OptionsFlow()
 
-class CannotConnect(HomeAssistantError):
-    """Error to indicate we cannot connect."""
+
+class S21OptionsFlow(OptionsFlow):
+    """Handle Blauberg S21 options."""
+
+    async def async_step_init(
+            self,
+            user_input: dict[str, Any] | None = None,
+    ) -> FlowResult:
+        """Manage the options."""
+
+        if user_input is not None:
+            # Store the new values
+            return self.async_create_entry(
+                title="",
+                data=user_input,
+            )
+
+        schema = vol.Schema(
+            {
+                vol.Required(
+                    CONF_HOST,
+                    default=self.config_entry.data.get(CONF_HOST),
+                ): str,
+                vol.Required(
+                    CONF_PORT,
+                    default=self.config_entry.data.get(CONF_PORT, 502),
+                ): int,
+            }
+        )
+
+        return self.async_show_form(
+            step_id="init",
+            data_schema=schema,
+        )

@@ -6,8 +6,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from pybls21.client import S21Client
+from . import S21Client
 from .const import DOMAIN
+from .models import S21Entity
 
 
 async def async_setup_entry(
@@ -23,7 +24,7 @@ async def async_setup_entry(
     ])
 
 
-class BlaubergS21BoostSwitch(SwitchEntity):
+class BlaubergS21BoostSwitch(SwitchEntity, S21Entity):
     _attr_icon = "mdi:fan-plus"
     _attr_translation_key = "blauberg_s21_boost_switch"
     _attr_name = "Boost Mode"
@@ -60,7 +61,7 @@ class BlaubergS21BoostSwitch(SwitchEntity):
         )
 
 
-class BlaubergS21TimerSwitch(SwitchEntity):
+class BlaubergS21TimerSwitch(SwitchEntity, S21Entity):
     _attr_icon = "mdi:timer"
     _attr_translation_key = "blauberg_s21_timer_switch"
     _attr_name = "Timer Mode"
@@ -97,7 +98,7 @@ class BlaubergS21TimerSwitch(SwitchEntity):
         )
 
 
-class BlaubergS21ScheduleModeSwitch(SwitchEntity):
+class BlaubergS21ScheduleModeSwitch(SwitchEntity, S21Entity):
     _attr_icon = "mdi:calendar-clock"
     _attr_translation_key = "blauberg_s21_schedule_mode_switch"
     _attr_name = "Schedule Mode"
